@@ -1,16 +1,27 @@
 from __future__ import annotations
 
-from app.ingestion.adapters.gis import GISAdapter
-from app.ingestion.adapters.legistar_api import LegistarAPIAdapter
-from app.ingestion.adapters.rss import RSSAdapter
-from app.ingestion.pipeline import IngestionPipeline
+import os
+import threading
+import time
+
+from app.ingestion.legistar_ingest import run_legistar_ingest
 
 
-def run_once() -> dict[str, dict[str, int]]:
-    pipeline = IngestionPipeline()
-    adapters = {
-        "legistar_api": LegistarAPIAdapter("https://webapi.legistar.com/v1/whatcomwa/events"),
-        "rss": RSSAdapter("https://www.cascadiadaily.com/feed", "Cascadia Daily News"),
-        "gis": GISAdapter("https://services.arcgis.com/example", "tax_parcel"),
-    }
-    return {name: pipeline.run_adapter(adapter) for name, adapter in adapters.items()}
+def run_once() -> dict[str, int]:
+    result = run_legistar_ingest(mode='incremental', source='whatcom_legistar_api')
+    return result.__dict__
+
+
+def start_background_scheduler() -> None:
+    interval = int(os.getenv('INGEST_INTERVAL_SECONDS', '1800'))
+
+    def _loop() -> None:
+        while True:
+            try:
+                run_once()
+            except Exception:
+                pass
+            time.sleep(max(1800, min(interval, 3600)))
+
+    thread = threading.Thread(target=_loop, daemon=True)
+    thread.start()
