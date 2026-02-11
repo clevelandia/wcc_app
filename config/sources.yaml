@@ -1,0 +1,84 @@
+sources:
+  - id: whatcom_legistar_api
+    name: Whatcom County Council Legistar API
+    kind: legistar
+    enabled: true
+    cadence: "*/30 * * * *"
+    provenance: "whatcom.legistar.com web API"
+    base_url: "https://webapi.legistar.com/v1/whatcomwa/events"
+    extraction_hints:
+      mode: api
+      parser: legistar_json
+      table_aware: false
+
+  - id: whatcom_legistar_html_fallback
+    name: Whatcom County Council Legistar HTML Fallback
+    kind: legistar
+    enabled: true
+    cadence: "0 */2 * * *"
+    provenance: "whatcom.legistar.com HTML"
+    base_url: "https://whatcom.legistar.com/Calendar.aspx"
+    extraction_hints:
+      mode: html
+      parser: legistar_html
+      table_aware: false
+
+  - id: cascadiadaily_rss
+    name: Cascadia Daily News RSS
+    kind: rss
+    enabled: true
+    cadence: "15 * * * *"
+    provenance: "RSS metadata/snippet only"
+    base_url: "https://www.cascadiadaily.com/feed"
+    extraction_hints:
+      mode: rss
+      parser: feedparser
+      table_aware: false
+
+  - id: bellingham_herald_rss
+    name: Bellingham Herald RSS
+    kind: rss
+    enabled: true
+    cadence: "20 * * * *"
+    provenance: "RSS metadata/snippet only"
+    base_url: "https://www.bellinghamherald.com/news/local/?widgetName=rssfeed&widgetContentId=712015&getXmlFeed=true"
+    extraction_hints:
+      mode: rss
+      parser: feedparser
+      table_aware: false
+
+  - id: whatcom_tax_parcel_viewer
+    name: Whatcom County Tax Parcel Viewer
+    kind: gis
+    enabled: true
+    cadence: "0 4 * * *"
+    provenance: "Whatcom County GIS open data"
+    base_url: "https://www.whatcomcounty.us/1987/Tax-Parcel-Viewer"
+    extraction_hints:
+      mode: gis
+      parser: arcgis_feature_layer
+      table_aware: true
+
+  - id: bellingham_cityiq
+    name: City of Bellingham CityIQ
+    kind: gis
+    enabled: true
+    cadence: "30 4 * * *"
+    provenance: "City of Bellingham CityIQ"
+    base_url: "https://cob.org/services/maps/cityiq"
+    extraction_hints:
+      mode: gis
+      parser: cityiq_portal
+      table_aware: true
+
+  - id: whatcom_zoning_maps
+    name: Whatcom County Zoning & Planning Maps
+    kind: zoning
+    enabled: true
+    cadence: "0 5 * * 1"
+    provenance: "Whatcom planning portal"
+    base_url: "https://www.whatcomcounty.us/3071/Planning-Maps"
+    extraction_hints:
+      mode: gis
+      parser: zoning_map_links
+      table_aware: false

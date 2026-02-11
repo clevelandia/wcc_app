@@ -1,0 +1,12 @@
+sources:
+  - id: whatcom_movement_zotero
+    name: Whatcom Movement Library (Zotero)
+    kind: zotero
+    enabled: true
+    cadence: "0 */6 * * *"
+    provenance: "Curated organizer theory sources"
+    base_url: "https://api.zotero.org/groups/0000000/items"
+    extraction_hints:
+      mode: api
+      parser: zotero_web_api
+      table_aware: false
