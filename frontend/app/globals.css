@@ -1,0 +1,15 @@
+:root { --bg:#f3f4f6; --card:#fff; --text:#111827; --muted:#6b7280; --border:#e5e7eb; --accent:#1d4ed8; }
+* { box-sizing:border-box; }
+body { margin:0; font-family: Inter, Arial, sans-serif; background:var(--bg); color:var(--text); }
+a { color:var(--accent); text-decoration:none; }
+.shell { display:grid; grid-template-columns: 240px 1fr; min-height:100vh; }
+.sidebar { background:#111827; color:#e5e7eb; padding:20px; }
+.sidebar a { display:block; color:#e5e7eb; padding:8px 10px; border-radius:8px; margin-bottom:8px; }
+.sidebar a:hover { background:#1f2937; }
+.main { padding:24px; }
+.card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px; margin-bottom:16px; }
+.row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+input,select,button { padding:10px; border:1px solid var(--border); border-radius:8px; }
+button { background:var(--accent); color:#fff; border:none; cursor:pointer; }
+.list { display:grid; gap:10px; }
+.muted { color:var(--muted); }
